@@ -7,6 +7,7 @@ import AuthLayout from './components/authentication/AuthLayout.jsx'
 import Login from './components/authentication/Login.jsx'
 import SignUp from './components/authentication/SignUp.jsx'
 import HomeLayout from './components/HomeLayout/HomeLayout.jsx'
+import ProfileDetail from './components/HomeLayout/ProfileDetail.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
 
       <Route path='/' element={<HomeLayout/>}>
         <Route index element={<App/>}/>
+        <Route path='profile' element={<ProfileDetail/>} />
       </Route>
     </>
   )
