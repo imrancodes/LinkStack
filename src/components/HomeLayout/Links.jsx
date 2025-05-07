@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaLink, FaStackOverflow } from 'react-icons/fa';
 import { CgArrowLongRight } from 'react-icons/cg';
 import Button from '../CommonComponents/Button';
@@ -25,6 +25,8 @@ const Links = ({
     id,
     updateLink,
     errors,
+    url,
+    platform,
 }) => {
     const linkOptions = [
         { name: 'GitHub', value: 'github', icon: <FaGithub size={18} /> },
@@ -73,10 +75,14 @@ const Links = ({
         },
     ];
 
-    const [selected, setSelected] = useState('');
+    const [selected, setSelected] = useState(platform || '');
     const [isOpen, setIsOpen] = useState(false);
 
     const selectedOption = linkOptions.find((opt) => opt.value === selected);
+
+    useEffect(() => {
+        setSelected(platform || '');
+    }, [platform]);
 
     return (
         <div className="bg-black rounded-lg p-4">
@@ -120,7 +126,7 @@ const Links = ({
                                         if (!option.value) return;
                                         setSelected(option.value);
                                         updateLink(
-                                            id,
+                                            id, 
                                             'platform',
                                             option.value,
                                             option.icon.type.name
@@ -140,16 +146,10 @@ const Links = ({
                         label={'Link'}
                         classname="pl-7.5"
                         placeholder={'e.g. https://yourlink.com'}
-                        // {...register('url', {
-                        //     required: 'Link is required',
-                        //     pattern: {
-                        //         value: /^(ftp|http|https):\/\/[^ "]+$/,
-                        //         message: 'Invalid URL format',
-                        //     },
-                        // })}
                         onChange={(e) => {
                             updateLink(id, 'url', e.target.value);
                         }}
+                        value={url}
                     />
                     {errors?.url && (
                         <p className="text-red-500 text-sm mt-1">

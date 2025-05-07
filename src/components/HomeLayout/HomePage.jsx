@@ -1,22 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import MobilePreview from './MobilePreview';
 import Button from '../CommonComponents/Button';
 import Item from '../../assets/item2.png';
 import Links from './Links';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    query,
+    where,
+    getDocs,
+    doc,
+    deleteDoc,
+} from 'firebase/firestore';
 import { app } from '../../firebase.js';
+import toast, { Toaster } from 'react-hot-toast';
 
 const db = getFirestore(app);
 
-const HomePage = () => {
+const HomePage = ({ user }) => {
     const [showComponent, setShowComponent] = useState(false);
     const [links, setLinks] = useState([]);
     const [errors, setErrors] = useState({ platform: false, url: false });
 
-    const handleShowLinks = async () => {
+    const handleShowLinks = () => {
         const newLink = {
-            id: Date.now(),
+            id: `link-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
             platform: '',
             url: '',
             icon: '',
@@ -25,14 +35,27 @@ const HomePage = () => {
         setShowComponent(true);
     };
 
-    const handleRemoveLink = (id) => {
-        const updatedLinks = links.filter((link) => link.id !== id);
-        setLinks(updatedLinks);
-
-        if (updatedLinks.length === 0) {
-            setShowComponent(false);
+    const handleRemoveLink = async (id) => {
+        try {
+            await toast.promise(
+                deleteDoc(doc(db, 'links', id)).then(() => {
+                    setLinks((prev) => prev.filter((link) => link.id !== id));
+    
+                    if (links.length === 1) {
+                        setShowComponent(false);
+                    }
+                }),
+                {
+                    loading: 'Removing Link...',
+                    success: 'Link removed successfully!',
+                    error: 'Something went wrong! Please try again.',
+                }
+            );
+        } catch (err) {
+            console.log(err);
         }
     };
+    
 
     const handleUpdateLink = (id, field, value, icon) => {
         setLinks((prevLinks) =>
@@ -51,6 +74,29 @@ const HomePage = () => {
             })
         );
     };
+
+    const getLinks = async () => {
+        try {
+            const q = query(
+                collection(db, 'links'),
+                where('userId', '==', user.uid)
+            );
+            const querySnapshot = await getDocs(q);
+            const LinksArray = querySnapshot.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id
+            }));
+            setLinks(LinksArray);
+            setShowComponent(LinksArray.length > 0);
+            console.log('Fetched Links:', LinksArray);
+        } catch (err) {
+            console.error('Error fetching notes:', err);
+        }
+    };
+
+    useEffect(() => {
+        getLinks();
+    }, []);
 
     const handleDataSave = async () => {
         const newErrors = {};
@@ -77,20 +123,34 @@ const HomePage = () => {
 
         if (Object.keys(newErrors).length === 0) {
             try {
-                for (const link of links) {
-                    const docRef = await addDoc(collection(db, 'links'), link);
-                    console.log(`Document written with ID: ${docRef.id} for link:`, link);
-                }
+                await toast.promise(
+                    Promise.all(
+                        links.map(async (link) => {
+                            const linkWithUserId = {
+                                ...link,
+                                userId: user.uid,
+                            };
+                            await addDoc(
+                                collection(db, 'links'),
+                                linkWithUserId
+                            );
+                        })
+                    ),
+                    {
+                        loading: 'Adding Link...',
+                        success: <b>Links added successfully!</b>,
+                        error: <b>Something went wrong! Please try again.</b>,
+                    }
+                );
             } catch (e) {
                 console.error('Error adding document: ', e);
             }
-            console.log('Links:', links);
         }
-        
     };
 
     return (
         <>
+            <Toaster />
             <Header />
             <div className="flex gap-8 ">
                 <MobilePreview />
