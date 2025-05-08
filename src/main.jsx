@@ -17,9 +17,9 @@ const router = createBrowserRouter(
         <Route path='signup' element={<SignUp />} />
       </Route>
 
-      <Route path='/' element={<HomeLayout/>}>
-        <Route index element={<App/>}/>
-        <Route path='profile' element={<ProfileDetail/>} />
+      <Route path='/' element={<HomeLayout />}>
+        <Route index element={<App />} />
+        <Route path='profile' element={<ProfileDetail />} />
       </Route>
     </>
   )
@@ -27,6 +27,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <div className='font-[Instrument Sans]'>
+      <RouterProvider router={router} />
+    </div>
   </StrictMode>,
 )

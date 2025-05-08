@@ -13,6 +13,7 @@ import {
     getDocs,
     doc,
     deleteDoc,
+    updateDoc,
 } from 'firebase/firestore';
 import { app } from '../../firebase.js';
 import toast, { Toaster } from 'react-hot-toast';
@@ -24,13 +25,27 @@ const HomePage = ({ user }) => {
     const [links, setLinks] = useState([]);
     const [errors, setErrors] = useState({ platform: false, url: false });
 
-    const handleShowLinks = () => {
-        const newLink = {
-            id: `link-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+    const handleShowLinks = async () => {
+
+        const docRef = await addDoc(collection(db, 'links'), {
             platform: '',
             url: '',
             icon: '',
+            user: user.uid,
+        });
+
+        await updateDoc(doc(db, 'links', docRef.id), {
+            id: docRef.id,
+        });
+
+        const newLink = {
+            id: docRef.id,
+            platform: '',
+            url: '',
+            icon: '',
+            user: user.uid,
         };
+
         setLinks((prev) => [...prev, newLink]);
         setShowComponent(true);
     };
@@ -40,7 +55,7 @@ const HomePage = ({ user }) => {
             await toast.promise(
                 deleteDoc(doc(db, 'links', id)).then(() => {
                     setLinks((prev) => prev.filter((link) => link.id !== id));
-    
+
                     if (links.length === 1) {
                         setShowComponent(false);
                     }
@@ -55,7 +70,6 @@ const HomePage = ({ user }) => {
             console.log(err);
         }
     };
-    
 
     const handleUpdateLink = (id, field, value, icon) => {
         setLinks((prevLinks) =>
@@ -79,16 +93,14 @@ const HomePage = ({ user }) => {
         try {
             const q = query(
                 collection(db, 'links'),
-                where('userId', '==', user.uid)
+                where('user', '==', user.uid)
             );
             const querySnapshot = await getDocs(q);
             const LinksArray = querySnapshot.docs.map((doc) => ({
                 ...doc.data(),
-                id: doc.id
             }));
             setLinks(LinksArray);
             setShowComponent(LinksArray.length > 0);
-            console.log('Fetched Links:', LinksArray);
         } catch (err) {
             console.error('Error fetching notes:', err);
         }
@@ -125,25 +137,27 @@ const HomePage = ({ user }) => {
             try {
                 await toast.promise(
                     Promise.all(
-                        links.map(async (link) => {
-                            const linkWithUserId = {
-                                ...link,
-                                userId: user.uid,
+                        links.map((link) => {
+                            const updateLinks = {
+                                platform: link.platform,
+                                url: link.url,
+                                icon: link.icon,
                             };
-                            await addDoc(
-                                collection(db, 'links'),
-                                linkWithUserId
+
+                            return updateDoc(
+                                doc(db, 'links', link.id),
+                                updateLinks
                             );
                         })
                     ),
                     {
-                        loading: 'Adding Link...',
-                        success: <b>Links added successfully!</b>,
+                        loading: 'Saving Links...',
+                        success: <b>Links saved successfully!</b>,
                         error: <b>Something went wrong! Please try again.</b>,
                     }
                 );
-            } catch (e) {
-                console.error('Error adding document: ', e);
+            } catch (err) {
+                console.log(err);
             }
         }
     };
