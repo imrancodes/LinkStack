@@ -1,4 +1,3 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import CenterCard from '../CommonComponents/CenterCard';
 import Logo from '../../assets/logo.png';
@@ -7,7 +6,7 @@ import Button from '../CommonComponents/Button';
 import googleIcon from '../../assets/google.png';
 import { Link } from 'react-router-dom';
 import { app } from '../../firebase';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,11 +26,12 @@ const SignUp = () => {
 
     const createUser = async (data) => {
         try {
-            await createUserWithEmailAndPassword(
+            const userCredential = await createUserWithEmailAndPassword(
                 auth,
                 data.email,
                 data.password
             );
+            await updateProfile(userCredential.user, {displayName: data.name})
 
             toast.success(
                 'Account created successfully. Redirecting to your dashboard...',
