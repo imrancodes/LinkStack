@@ -3,6 +3,7 @@ import { useId } from 'react';
 const Input = ({
     label,
     value,
+    onValueChange,
     type = 'text',
     classname = '',
     ...props
@@ -17,6 +18,7 @@ const Input = ({
                 value={value}
                 {...props}
                 className={`${classname} pr-4 pl-2 py-2 outline-0 border border-gray-400 w-full rounded my-2 dark:text-white focus:border focus:border-[#633CFF]`}
+                onChange={(e) => onValueChange && onValueChange(e.target.value)}
                 id={id}
             />
         </div>

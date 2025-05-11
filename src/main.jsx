@@ -7,7 +7,7 @@ import AuthLayout from './components/authentication/AuthLayout.jsx'
 import Login from './components/authentication/Login.jsx'
 import SignUp from './components/authentication/SignUp.jsx'
 import HomeLayout from './components/HomeLayout/HomeLayout.jsx'
-import ProfileDetail from './components/HomeLayout/ProfileDetail.jsx'
+import ProfileDetail from './components/ProfileSection/ProfileDetail.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,8 +27,6 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <div className='font-[Instrument Sans]'>
       <RouterProvider router={router} />
-    </div>
   </StrictMode>,
 )

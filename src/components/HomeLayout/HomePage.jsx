@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import Header from './Header';
-import MobilePreview from './MobilePreview';
+import Header from './../Navbar/Header.jsx';
+import MobilePreview from '../MobilePreview/MobilePreview.jsx';
 import Button from '../CommonComponents/Button';
 import Item from '../../assets/item2.png';
 import Links from './Links';
@@ -184,9 +184,8 @@ const HomePage = ({ user }) => {
                         </Button>
                     </div>
                     <div
-                        className={`min-h-[430px] mx-8 my-4 links flex flex-col gap-4 overflow-y-auto scrollbar-hide ${
-                            showComponent ? 'h-[430px]' : 'h-0'
-                        } ${showComponent ? 'block' : 'hidden'} `}>
+                        className={`min-h-[430px] mx-8 my-4 links flex flex-col gap-4 overflow-y-auto scrollbar-hide ${showComponent ? 'h-[430px]' : 'h-0'
+                            } ${showComponent ? 'block' : 'hidden'} `}>
                         {links.map((link, i) => (
                             <Links
                                 order={i + 1}
@@ -201,9 +200,8 @@ const HomePage = ({ user }) => {
                         ))}
                     </div>
                     <div
-                        className={`bg-black rounded-lg p-4 mx-8 my-4 flex flex-col items-center justify-center ${
-                            showComponent ? 'hidden' : 'block'
-                        }`}>
+                        className={`bg-black rounded-lg p-4 mx-8 my-4 flex flex-col items-center justify-center ${showComponent ? 'hidden' : 'block'
+                            }`}>
                         <img
                             src={Item}
                             alt=""
@@ -221,7 +219,7 @@ const HomePage = ({ user }) => {
                     <div className="flex justify-end">
                         <Button
                             onClick={handleDataSave}
-                            className={`bg-[#643CFF] px-6 py-2 mt-6 mr-8 disabled:bg-[#977ff8] disabled:cursor-not-allowed hover:bg-[#633cffe2]`}
+                            className={`bg-[#643CFF] px-6 py-2 mt-6 mr-8 disabled:bg-[#977ff8] hover:bg-[#633cffe2]`}
                             type="submit"
                             disabled={links.length === 0}>
                             Save
