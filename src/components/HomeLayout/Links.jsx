@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaLink, FaStackOverflow } from 'react-icons/fa';
 import { CgArrowLongRight } from 'react-icons/cg';
 import Button from '../CommonComponents/Button';
@@ -18,6 +18,8 @@ import { FaXTwitter } from 'react-icons/fa6';
 import { FaYoutube } from 'react-icons/fa6';
 import { FaFacebook } from 'react-icons/fa';
 import { RiTelegram2Fill } from 'react-icons/ri';
+import { FaFreeCodeCamp } from "react-icons/fa";
+
 
 const Links = ({
     order,
@@ -43,6 +45,7 @@ const Links = ({
             icon: <FaStackOverflow size={18} />,
         },
         { name: 'Hashnode', value: 'hashnode', icon: <FaHashnode size={18} /> },
+        { name: 'FreeCodeCamp', value: 'freecodecamp', icon: <FaFreeCodeCamp size={18} /> },
         {
             name: 'Instagram',
             value: 'instagram',
@@ -146,9 +149,7 @@ const Links = ({
                         label={'Link'}
                         classname="pl-7.5"
                         placeholder={'e.g. https://yourlink.com'}
-                        onChange={(e) => {
-                            updateLink(id, 'url', e.target.value);
-                        }}
+                        onValueChange={value =>  updateLink(id, 'url', value)}
                         value={url}
                     />
                     {errors?.url && (
