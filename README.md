@@ -1,12 +1,72 @@
-# React + Vite
+# LinkStack 🔗
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A beautiful, customizable link-sharing platform to showcase all your profiles in one place with Firebase-powered authentication.
 
-Currently, two official plugins are available:
+## Features ✨
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **One-Click Profile**: Share all your links with a single URL
+- **Firebase Authentication**: Secure email/password and Google login
+- **Cloudinary Integration**: Easy profile picture uploads
+- **Instant Notifications**: React Hot Toast for smooth user feedback
+- **Mobile-First Design**: Fully responsive on all devices
 
-## Expanding the ESLint configuration
+## Tech Stack 🛠️
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Frontend:**
+- ⚛️ React.js (v18+)
+- 🛣️ React Router v6
+- 🎨 Tailwind CSS + CSS Modules
+- ✨ React Icons
+- 🍞 React Hot Toast
+
+**Backend:**
+- 🔥 Firebase (Authentication + Database)
+
+**Media Handling:**
+- ☁️ Cloudinary API (Image upload/storage)
+
+**Deployment:**
+- ▲ Vercel 
+
+## Screenshots 📸
+
+| Authentication | Profile Editor | Link Editor |
+|---------------|----------------|-------------|
+| ![Login](./src/assets/login.png) | ![Editor](./src/assets/profileEditor.png) | ![Link Editor](./src/assets/linkEditor.png) | 
+
+| Mobile View | Profile Preview |
+|-------------|-----------------|
+|![Mobile](./src/assets/mobile%20view.png) | ![Preview](./src/assets/preview.png) |
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/imrancodes/LinkStack.git
+
+2. Navigate to the project directory:
+   ```bash
+   cd LinkStack
+3. Install dependencies:
+   ```bash
+   npm install
+4. Start the development server:
+   ```bash
+   npm run dev
+
+## 🌟 Contributing
+
+We welcome contributions! Feel free to open an issue or submit a pull request.
+
+```bash
+# Create a new branch
+git checkout -b feature-branch
+
+# Commit your changes
+git commit -m 'Added new feature'
+
+# Push to GitHub
+git push origin feature-branch
+```
+
+---

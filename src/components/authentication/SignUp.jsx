@@ -154,7 +154,7 @@ const SignUp = () => {
                             className="border bg-white py-2 flex items-center justify-center gap-5 w-full text-black"
                             onClick={(e) => AuthWithGoogle(e, navigate)}>
                             <img className="size-7 " src={googleIcon} alt="" />
-                            Login with Google
+                            Sign up with Google
                         </Button>
                     </div>
                 </div>
