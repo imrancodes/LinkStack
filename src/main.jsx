@@ -20,8 +20,8 @@ const router = createBrowserRouter(
 
       <Route path='/' element={<HomeLayout />}>
         <Route index element={<App />} />
-        <Route path='profile' element={<ProfileDetail />} />
-        <Route path='preview' element={<Preview />} />
+        <Route path='updateProfile' element={<ProfileDetail />} />
+        <Route path='profile/:userId' element={<Preview />} />
       </Route>
     </>
   )

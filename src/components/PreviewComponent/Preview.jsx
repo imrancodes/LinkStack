@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Button from '../CommonComponents/Button';
 import CenterCard from '../CommonComponents/CenterCard';
 import { useEffect, useState } from 'react';
@@ -43,7 +43,9 @@ const Preview = () => {
     const [number, setNumber] = useState('');
     const [imageUrl, setImageUrl] = useState(profile);
     const [links, setLinks] = useState([]);
-    const [userId, setUserId] = useState('');
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    let { userId } = useParams();
 
     const getBrandDetails = (value) => {
         switch (value) {
@@ -96,37 +98,36 @@ const Preview = () => {
     };
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                setUserId(user.uid);
-                try {
-                    const profileRef = doc(db, 'profileDetail', user.uid);
+        const fetchProfile = async () => {
+            try {
+                if (userId) {
+                    const profileRef = doc(db, 'profileDetail', userId);
                     const profileSnap = await getDoc(profileRef);
 
                     if (profileSnap.exists()) {
                         const profileData = profileSnap.data();
                         setName(profileData.name || '');
-                        setEmail(profileData.email || user.email || '');
+                        setEmail(profileData.email || '');
                         setNumber(profileData.phoneNo || '');
                         setImageUrl(profileData.image || profile);
                     }
-
-                    const q = query(
-                        collection(db, 'links'),
-                        where('user', '==', user.uid)
-                    );
-                    const querySnapshot = await getDocs(q);
-                    const LinksArray = querySnapshot.docs.map((doc) => ({
-                        ...doc.data(),
-                    }));
-                    setLinks(LinksArray);
-                } catch (err) {
-                    console.error(err);
                 }
+
+                const q = query(
+                    collection(db, 'links'),
+                    where('user', '==', userId)
+                );
+                const querySnapshot = await getDocs(q);
+                const LinksArray = querySnapshot.docs.map((doc) => ({
+                    ...doc.data(),
+                }));
+                setLinks(LinksArray);
+            } catch (err) {
+                console.error(err);
             }
-        });
-        return () => unsubscribe();
-    }, []);
+        };
+        fetchProfile()
+    }, [userId]);
 
     const renderProfile = () => (
         <div className="min-[900px]:bg-[#151515] flex flex-col justify-center items-center rounded-xl min-[900px]:shadow-[0_3px_10px_rgb(0,0,0,0.2)] p-10 min-[900px]:w-[400px] mx-auto max-[400px]:mx-6">
@@ -181,6 +182,12 @@ const Preview = () => {
         }
     };
 
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <>
             <Toaster />
@@ -201,11 +208,10 @@ const Preview = () => {
                         </Button>
                     </nav>
                 )}
-                {(links.length < 4 || links.length !== 0) ||
-                links.length === 0 ? (
-                    <CenterCard>{renderProfile()}</CenterCard>
-                ) : (
+                {links.length > 4 || windowWidth < 400 ? (
                     renderProfile()
+                ) : (
+                    <CenterCard>{renderProfile()}</CenterCard>
                 )}
             </div>
         </>
