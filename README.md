@@ -1,5 +1,6 @@
 # LinkStack 🔗
 
+<<<<<<< HEAD
 A beautiful, customizable link-sharing platform to showcase all your profiles in one place with Firebase-powered authentication.
 
 ## Features ✨
@@ -12,6 +13,22 @@ A beautiful, customizable link-sharing platform to showcase all your profiles in
 
 ## Tech Stack 🛠️
 
+=======
+![LinkStack Banner](./assets/banner.png) *<!-- Add your own banner image -->*
+
+A beautiful, customizable link-sharing platform to showcase all your profiles in one place with Firebase-powered authentication.
+
+## Features ✨
+
+- **One-Click Profile**: Share all your links with a single URL
+- **Firebase Authentication**: Secure email/password and Google login
+- **Cloudinary Integration**: Easy profile picture uploads
+- **Instant Notifications**: React Hot Toast for smooth user feedback
+- **Mobile-First Design**: Fully responsive on all devices
+
+## Tech Stack 🛠️
+
+>>>>>>> f68824449871bfc74aaab500fbbc54b280b5d7c1
 **Frontend:**
 - ⚛️ React.js (v18+)
 - 🛣️ React Router v6
