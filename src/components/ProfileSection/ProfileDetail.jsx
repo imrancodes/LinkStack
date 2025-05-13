@@ -144,8 +144,8 @@ const ProfileDetail = () => {
             ) : (
                 <div className="flex gap-8">
                     <MobilePreview />
-                    <div className="bg-[#191919d4] w-[70%] rounded-lg mr-4">
-                        <div className="px-8 pt-4">
+                    <div className="bg-[#191919d4] max-[1000px]:w-full max-[1000px]:ml-4 max-[1200px]:w-[60%] w-[70%] rounded-lg mr-4 pb-6 mb-4">
+                        <div className="min-[500px]:mx-8 mx-4 pt-6">
                             <h1 className="text-3xl font-semibold mb-3">
                                 Profile Details
                             </h1>
@@ -155,11 +155,11 @@ const ProfileDetail = () => {
                             </p>
                         </div>
                         <form onSubmit={handleSave}>
-                            <div className="flex items-center justify-between bg-black rounded-lg p-4 mx-8 my-4">
+                            <div className="flex items-center justify-between bg-black rounded-lg p-4 min-[500px]:mx-8 mx-4 my-4 max-[650px]:flex-col max-[650px]:items-start max-[650px]:justify-center  gap-y-4 ">
                                 <h1 className="font-semibold">
                                     Profile picture
                                 </h1>
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-4 max-[650px]:flex-col max-[650px]:items-start">
                                     <div className="flex items-center gap-4 relative group">
                                         <img
                                             src={imageUrl}
@@ -185,12 +185,12 @@ const ProfileDetail = () => {
                                         />
                                     </div>
                                     <p className="text-[12px] font-light">
-                                        Image must be below <br /> 1024x1024px.
-                                        Use PNG <br />, JPG or JPEG format.
+                                        Image must be below <br className='max-[650px]:hidden' /> 1024x1024px.
+                                        Use PNG <br className='max-[650px]:hidden'/>, JPG or JPEG format.
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex flex-col bg-black rounded-lg p-4 mx-8 my-4">
+                            <div className="flex flex-col bg-black rounded-lg p-4 min-[500px]:mx-8 mx-4 my-4">
                                 <Input
                                     label={'Full Name'}
                                     placeholder={'Enter your full name'}
@@ -215,7 +215,7 @@ const ProfileDetail = () => {
                             <div className="bg-black h-1" />
                             <div className="flex justify-end">
                                 <Button
-                                    className={`bg-[#643CFF] px-6 py-2 mt-6 mr-8 disabled:bg-[#977ff8] disabled:cursor-not-allowed hover:bg-[#633cffe2]`}
+                                    className={`bg-[#643CFF] px-6 py-2 mt-4 mr-8 disabled:bg-[#977ff8] disabled:cursor-not-allowed hover:bg-[#633cffe2]`}
                                     type="submit">
                                     Save
                                 </Button>

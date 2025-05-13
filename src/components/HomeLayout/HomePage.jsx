@@ -168,8 +168,8 @@ const HomePage = ({ user }) => {
             <Header />
             <div className="flex gap-8 ">
                 <MobilePreview />
-                <div className="bg-[#191919d4] w-[70%] rounded-lg mr-4">
-                    <div className="px-8 py-4">
+                <div className="bg-[#191919d4] max-[1000px]:w-full max-[1000px]:ml-4 max-[1200px]:w-[60%] w-[70%] rounded-lg mr-4 pb-6 mb-4">
+                    <div className="min-[500px]:px-8 px-4 py-6">
                         <h1 className="text-3xl font-semibold mb-3">
                             Customize your links
                         </h1>
@@ -184,7 +184,7 @@ const HomePage = ({ user }) => {
                         </Button>
                     </div>
                     <div
-                        className={`min-h-[430px] mx-8 my-4 links flex flex-col gap-4 overflow-y-auto scrollbar-hide ${showComponent ? 'h-[430px]' : 'h-0'
+                        className={`min-h-[430px] min-[500px]:mx-8 mx-4 my-4 links flex flex-col gap-4 overflow-y-auto scrollbar-hide ${showComponent ? 'h-[430px]' : 'h-0'
                             } ${showComponent ? 'block' : 'hidden'} `}>
                         {links.map((link, i) => (
                             <Links
@@ -200,7 +200,7 @@ const HomePage = ({ user }) => {
                         ))}
                     </div>
                     <div
-                        className={`bg-black rounded-lg p-4 mx-8 my-4 flex flex-col items-center justify-center ${showComponent ? 'hidden' : 'block'
+                        className={`bg-black rounded-lg p-4 min-[500px]:mx-8 mx-4 my-4 flex flex-col items-center justify-center ${showComponent ? 'hidden' : 'block'
                             }`}>
                         <img
                             src={Item}
@@ -219,7 +219,7 @@ const HomePage = ({ user }) => {
                     <div className="flex justify-end">
                         <Button
                             onClick={handleDataSave}
-                            className={`bg-[#643CFF] px-6 py-2 mt-6 mr-8 disabled:bg-[#977ff8] hover:bg-[#633cffe2]`}
+                            className={`bg-[#643CFF] px-6 py-2 mt-4 mr-8 disabled:bg-[#977ff8] hover:bg-[#633cffe2]`}
                             type="submit"
                             disabled={links.length === 0}>
                             Save

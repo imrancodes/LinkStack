@@ -41,14 +41,15 @@ const MobilePreview = () => {
     const [imageUrl, setImageUrl] = useState(profile);
     const [links, setLinks] = useState([]);
 
-    const getBrandDetails = (value) => {
+
+        const getBrandDetails = (value) => {
         switch (value) {
             case 'github':
                 return { icon: <FaGithub size={18} />, color: '#181717' }; // GitHub
             case 'linkedin':
                 return { icon: <FaLinkedin size={18} />, color: '#0A66C2' }; // LinkedIn
             case 'portfolio':
-                return { icon: <IoGlobeOutline size={18} />, color: '#000000' }; // Portfolio
+                return { icon: <IoGlobeOutline size={18} />, color: '#2D395D' }; // Portfolio
             case 'devto':
                 return { icon: <FaDev size={18} />, color: '#0A0A0A' }; // Dev.to
             case 'stackoverflow':
@@ -59,7 +60,7 @@ const MobilePreview = () => {
             case 'hashnode':
                 return { icon: <FaHashnode size={18} />, color: '#2962FF' }; // Hashnode
             case 'freecodecamp':
-                return { icon: <FaFreeCodeCamp size={18} />, color: '#006400' }; // FreeCodeCamp
+                return { icon: <FaFreeCodeCamp size={18} />, color: '#12122B' }; // FreeCodeCamp
             case 'instagram':
                 return { icon: <FaInstagram size={18} />, color: '#E4405F' }; // Instagram
             case 'twitter':
@@ -122,16 +123,17 @@ const MobilePreview = () => {
         });
         return () => unsubscribe();
     }, []);
+    
 
     return (
-        <div className="bg-[#191919d4] rounded-lg w-[30%] ml-4 flex items-center justify-center">
+        <div className="bg-[#191919d4] rounded-lg max-[1000px]:hidden max-[1200px]:w-[40%] w-[30%] ml-4 flex items-center justify-center">
             <div
                 className="relative w-full h-full bg-no-repeat bg-center"
                 style={{
                     backgroundImage: `url(${MobilePreviewImage})`,
                     minHeight: '500px',
                 }}>
-                <div className="absolute top-92 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center">
+                <div className="absolute min-[1200px]:top-96 top-98 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center">
                     <img
                         src={imageUrl}
                         className="size-24 border-4 border-[#643CFF] rounded-full"
@@ -157,7 +159,10 @@ const MobilePreview = () => {
                         <div className="bg-[#151515] w-40 h-6 rounded-lg mt-3"></div>
                     )}
                     {Array.from({ length: 4 }).map((_, index) => {
-                        const link = links[index];
+                        const filteredLink = links.filter(
+                            (link) => link.platform && link.url
+                        );
+                        const link = filteredLink[index];
 
                         if (link) {
                             const { icon, color } = getBrandDetails(
@@ -167,12 +172,12 @@ const MobilePreview = () => {
                                 link.platform.charAt(0).toUpperCase() +
                                 link.platform.slice(1);
 
-                            return link.url ? (
+                            return (
                                 <a
                                     href={link.url}
                                     target="_blank"
                                     key={link.id}
-                                    className="flex items-center justify-around w-56 h-12 rounded-lg mt-4"
+                                    className="flex items-center justify-between px-4 w-56 h-12 rounded-lg mt-4"
                                     style={{ backgroundColor: color }}>
                                     <div className="flex items-center gap-2">
                                         {icon}
@@ -180,14 +185,9 @@ const MobilePreview = () => {
                                     </div>
                                     <FaArrowRight />
                                 </a>
-                            ) : (
-                                <div
-                                    key={link.id}
-                                    className="bg-[#151515] w-56 h-12 rounded-lg mt-4"></div>
                             );
                         }
 
-                        // Render this div if the link is not available
                         return (
                             <div
                                 key={index}
